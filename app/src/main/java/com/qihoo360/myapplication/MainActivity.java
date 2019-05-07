@@ -291,20 +291,22 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button11).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //设置默认应用
-                RoleManager roleManager = getSystemService(RoleManager.class);
-                if (roleManager == null){
-                    return;
-                }
-                if (roleManager.isRoleAvailable(RoleManager.ROLE_GALLERY)) {
-                    if (roleManager.isRoleHeld(RoleManager.ROLE_GALLERY)) {
-                        // 默认图库
-                        Log.e("zhangyunpeng", "默认图库");
-                    } else {
-                        Log.e("zhangyunpeng", "不是默认图库，请求");
-                        Intent roleRequestIntent = roleManager.createRequestRoleIntent(
-                                RoleManager.ROLE_GALLERY);
-                        startActivity(roleRequestIntent);
+                if ("Q".equalsIgnoreCase(Build.VERSION.RELEASE) || "10".equalsIgnoreCase(Build.VERSION.RELEASE)) {
+                    //设置默认应用
+                    RoleManager roleManager = getSystemService(RoleManager.class);
+                    if (roleManager == null){
+                        return;
+                    }
+                    if (roleManager.isRoleAvailable(RoleManager.ROLE_GALLERY)) {
+                        if (roleManager.isRoleHeld(RoleManager.ROLE_GALLERY)) {
+                            // 默认图库
+                            Log.e("zhangyunpeng", "默认图库");
+                        } else {
+                            Log.e("zhangyunpeng", "不是默认图库，请求");
+                            Intent roleRequestIntent = roleManager.createRequestRoleIntent(
+                                    RoleManager.ROLE_GALLERY);
+                            startActivityForResult(roleRequestIntent, DEFAULT_PHOTO_REQUEST_CODE);
+                        }
                     }
                 }
             }
@@ -436,6 +438,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (requestCode == DEFAULT_PHOTO_REQUEST_CODE){
+            //如果用户取消的话，result code=0，所以走到这里一定是用户将我们的app设置为默认app了
             ToastUtil.showToast(MainActivity.this, "恭喜成为默认图片管理软件");
             return;
         }
