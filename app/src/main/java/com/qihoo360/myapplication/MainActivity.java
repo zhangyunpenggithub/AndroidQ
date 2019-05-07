@@ -110,6 +110,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //SAF 创建文件
+        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+                //设置创建的文件是可打开的
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                //设置创建的文件的minitype为文本类型
+                intent.setType("text/plain");
+                //设置创建文件的名称，注意SAF中使用minitype而不是文件的后缀名来判断文件类型。
+                intent.putExtra(Intent.EXTRA_TITLE, "123.txt");
+                startActivityForResult(intent, SAF_CREATE_FILE_REQUEST_CODE);
+            }
+        });
+
         //SAF 读取文件内容
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,21 +144,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 editDocument();
-            }
-        });
-
-        //SAF 创建文件
-        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
-                //设置创建的文件是可打开的
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                //设置创建的文件的minitype为文本类型
-                intent.setType("text/*");
-                //设置创建文件的名称，注意SAF中使用minitype而不是文件的后缀名来判断文件类型。
-                intent.putExtra(Intent.EXTRA_TITLE, "123.txt");
-                startActivityForResult(intent, SAF_CREATE_FILE_REQUEST_CODE);
             }
         });
 
@@ -278,6 +278,10 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button10).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (mUris.size() == 0){
+                    ToastUtil.showToast(MainActivity.this, "还没有读取到图片文件");
+                    return;
+                }
                 int deleteResult = getContentResolver().delete(mUris.get(mUris.size() - 1), null, null);
                 if (deleteResult == 1){
                     ToastUtil.showToast(MainActivity.this, "删除文件完成");
