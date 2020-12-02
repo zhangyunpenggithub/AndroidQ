@@ -90,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
                 File file1 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), "沙箱");
                 file1.mkdirs();
 
+                File file0 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data");
+                for (File listFile : file0.listFiles()) {
+                    Log.e("zhangyunpeng", listFile.getAbsolutePath());
+                }
                 File file3 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/1", "沙箱");
                 file3.mkdirs();
                 if (file3.exists()) {
@@ -292,29 +296,29 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //申请成为默认图库
-        findViewById(R.id.button11).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ("Q".equalsIgnoreCase(Build.VERSION.RELEASE) || "10".equalsIgnoreCase(Build.VERSION.RELEASE)) {
-                    //设置默认应用
-                    RoleManager roleManager = getSystemService(RoleManager.class);
-                    if (roleManager == null){
-                        return;
-                    }
-                    if (roleManager.isRoleAvailable(RoleManager.ROLE_GALLERY)) {
-                        if (roleManager.isRoleHeld(RoleManager.ROLE_GALLERY)) {
-                            // 默认图库
-                            Log.e("zhangyunpeng", "默认图库");
-                        } else {
-                            Log.e("zhangyunpeng", "不是默认图库，请求");
-                            Intent roleRequestIntent = roleManager.createRequestRoleIntent(
-                                    RoleManager.ROLE_GALLERY);
-                            startActivityForResult(roleRequestIntent, DEFAULT_PHOTO_REQUEST_CODE);
-                        }
-                    }
-                }
-            }
-        });
+//        findViewById(R.id.button11).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if ("Q".equalsIgnoreCase(Build.VERSION.RELEASE) || "10".equalsIgnoreCase(Build.VERSION.RELEASE)) {
+//                    //设置默认应用
+//                    RoleManager roleManager = getSystemService(RoleManager.class);
+//                    if (roleManager == null){
+//                        return;
+//                    }
+//                    if (roleManager.isRoleAvailable(RoleManager.ROLE_GALLERY)) {
+//                        if (roleManager.isRoleHeld(RoleManager.ROLE_GALLERY)) {
+//                            // 默认图库
+//                            Log.e("zhangyunpeng", "默认图库");
+//                        } else {
+//                            Log.e("zhangyunpeng", "不是默认图库，请求");
+//                            Intent roleRequestIntent = roleManager.createRequestRoleIntent(
+//                                    RoleManager.ROLE_GALLERY);
+//                            startActivityForResult(roleRequestIntent, DEFAULT_PHOTO_REQUEST_CODE);
+//                        }
+//                    }
+//                }
+//            }
+//        });
 
 
     }
@@ -347,8 +351,8 @@ public class MainActivity extends AppCompatActivity {
         values.put(MediaStore.Images.Media.DISPLAY_NAME, displayName);
         values.put(MediaStore.Images.Media.DESCRIPTION, description);
         values.put(MediaStore.Images.Media.MIME_TYPE, mimeType);
-        values.put(MediaStore.Images.Media.PRIMARY_DIRECTORY, savePrimaryDir);
-        values.put(MediaStore.Images.Media.SECONDARY_DIRECTORY, saveSecondaryDir);
+//        values.put(MediaStore.Images.Media.PRIMARY_DIRECTORY, savePrimaryDir);
+//        values.put(MediaStore.Images.Media.SECONDARY_DIRECTORY, saveSecondaryDir);
         Uri url = null;
         String stringUrl = null;    /* value to be returned */
         ContentResolver cr = context.getContentResolver();
@@ -389,20 +393,20 @@ public class MainActivity extends AppCompatActivity {
      */
     private void requestPermission() {
         //此处在beta1只能拿到sdk_int为28
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_MEDIA_IMAGES)
-                    != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_MEDIA_AUDIO)
-                    != PackageManager.PERMISSION_GRANTED  || ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.READ_MEDIA_VIDEO)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO,
-                                Manifest.permission.READ_MEDIA_VIDEO},
-                        REQUEST_PERMISSION_REQUEST_CODE);
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            if (ContextCompat.checkSelfPermission(this,
+//                    Manifest.permission.READ_MEDIA_IMAGES)
+//                    != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,
+//                    Manifest.permission.READ_MEDIA_AUDIO)
+//                    != PackageManager.PERMISSION_GRANTED  || ContextCompat.checkSelfPermission(this,
+//                    Manifest.permission.READ_MEDIA_VIDEO)
+//                    != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_AUDIO,
+//                                Manifest.permission.READ_MEDIA_VIDEO},
+//                        REQUEST_PERMISSION_REQUEST_CODE);
+//            }
+//        }
     }
 
 
